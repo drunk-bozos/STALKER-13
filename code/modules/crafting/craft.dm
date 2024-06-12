@@ -4,9 +4,9 @@
 	var/viewing_subcategory = 1
 	var/list/categories = list(
 				CAT_WEAPONRY,
-				CAT_ROBOT,
+//				CAT_ROBOT,
 				CAT_MISC,
-				CAT_PRIMAL,
+//				CAT_PRIMAL,
 				CAT_FOOD,
 				CAT_CLOTHING)
 	var/list/subcategories = list(
@@ -17,11 +17,18 @@
 						CAT_NONE, //Misc subcategories
 						CAT_NONE, //Tribal subcategories
 						list(	//Food subcategories
-							CAT_BREAD,
+							CAT_GOULASH,
+							CAT_SHISHKEBAB,
+							CAT_RICEDISH,
+							CAT_FERMENTED,
+							CAT_PASHTET,
+							CAT_CORNED,
+							CAT_SOUPS,
+							CAT_MEAT,
+							/*CAT_BREAD,
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
-							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,
 							CAT_PIE,
@@ -29,8 +36,8 @@
 							CAT_SALAD,
 							CAT_SANDWICH,
 							CAT_SOUP,
-							CAT_SPAGHETTI),
-                        CAT_CLOTHING) //Clothing subcategories
+							CAT_SPAGHETTI,*/
+                        CAT_CLOTHING)) //Clothing subcategories
 
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE

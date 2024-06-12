@@ -16,9 +16,6 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
-
-
-
 /*
  * Twohanded
  */
@@ -258,6 +255,51 @@
 			var/obj/structure/grille/G = A
 			G.take_damage(40, BRUTE, "melee", 0)
 
+/*
+* Old Axe
+ */
+/obj/item/twohanded/oldaxe
+	icon_state = "oldaxe0"
+	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
+	name = "old axe"
+	desc = "An ancient, yet surprisingly sharp axe which has stood the test of time."
+	force = 5
+	throwforce = 15
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	force_unwielded = 5
+	force_wielded = 24
+	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+	max_integrity = 200
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/twohanded/oldaxe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
+
+/obj/item/twohanded/oldaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "oldaxe[wielded]"
+	return
+
+/obj/item/twohanded/oldaxe/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
+
+/obj/item/twohanded/oldaxe/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(wielded) //destroys windows and grilles in one hit
+		if(istype(A, /obj/structure/window))
+			var/obj/structure/window/W = A
+			W.take_damage(200, BRUTE, "melee", 0)
+		else if(istype(A, /obj/structure/grille))
+			var/obj/structure/grille/G = A
+			G.take_damage(40, BRUTE, "melee", 0)
 
 /*
  * Double-Bladed Energy Swords - Cheridan
@@ -509,7 +551,7 @@
 		parts_list -= G
 		qdel(src)
 	..()
-	
+
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
@@ -537,7 +579,7 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
 
-/obj/item/twohanded/spear/explosive/update_icon()	
+/obj/item/twohanded/spear/explosive/update_icon()
 	icon_state = "spearbomb[wielded]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
@@ -630,6 +672,35 @@
 		return 1
 	return 0
 
+/obj/item/twohanded/required/chainsaw/old
+	name = "chainsaw"
+	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
+	icon_state = "chainsaw_old_off"
+
+/obj/item/twohanded/required/chainsaw/old/attack_self(mob/user)
+	on = !on
+	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
+	force = on ? force_on : initial(force)
+	throwforce = on ? force_on : initial(force)
+	icon_state = "chainsaw_old_[on ? "on" : "off"]"
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = on
+
+	if(on)
+		hitsound = 'sound/weapons/chainsawhit.ogg'
+	else
+		hitsound = "swing_hit"
+
+	if(src == user.get_active_held_item()) //update inhands
+		user.update_inv_hands()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
+/obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
+	if(wielded)
+		. = ..()
+
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
 	icon_state = "spearglass0"
@@ -662,6 +733,24 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "pitchfork"
 	desc = "A simple tool used for moving hay."
+	force = 7
+	throwforce = 15
+	w_class = WEIGHT_CLASS_BULKY
+	force_unwielded = 7
+	force_wielded = 15
+	attack_verb = list("attacked", "impaled", "pierced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+	max_integrity = 200
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/twohanded/rake
+	icon_state = "rake"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "rake"
+	desc = "A simple tool used for tilling soil."
 	force = 7
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY

@@ -19,7 +19,7 @@
 
 	if(src.loc && istype(src.loc, /turf/open/stalker/floor/water))
 
-		var/image/standing //= image('icons/stalker/water.dmi', "water_overlay")
+		var/image/standing //= image('stalker/icons/water.dmi', "water_overlay")
 		var/icon/I
 		if(lying != 0)
 			I = turn(icon('stalker/icons/water.dmi', "water_overlay_turned"), - lying)
@@ -43,6 +43,16 @@
 	name = "bulrush"
 	icon = 'stalker/icons/fallout/flora.dmi'
 
+/obj/structure/flora/stalker/smallbush
+	icon_state = "tall_grass_8"
+	layer = 4.01
+	anchored = 1
+	opacity = 1
+
+/obj/structure/flora/stalker/bush/Initialize()
+	..()
+	icon_state = "tall_grass_[rand(1,8)]"
+
 /obj/structure/flora/stalker/bush
 	icon_state = "very_tall_grass_8"
 	layer = 4.01
@@ -59,7 +69,12 @@
 	/turf/closed/wall/stalker/bricks,
 	/turf/closed/wall/stalker/bricks_yellow,
 	/turf/closed/wall/stalker/bricks_white,
-	/turf/closed/wall/stalker/beton_agro
+	/turf/closed/wall/stalker/beton_agro,
+	/turf/closed/wall/stalker/brick,
+	/turf/closed/wall/stalker/brickdark,
+	/turf/closed/wall/stalker/superstore,
+	/turf/closed/wall/stalker/store,
+	/turf/closed/wall/stalker/log
 	///obj/structure/stalker/okno/whitebrick/odin,
 	///obj/structure/stalker/okno/whitebrick/dva,
 	///obj/structure/stalker/okno/whitebrick/tri,
@@ -71,6 +86,8 @@
 	///obj/structure/stalker/okno/redbrick/double2)
 	)
 	smooth = SMOOTH_TRUE
+	var/resistance_flags = INDESTRUCTIBLE
+	flags_1 = CHECK_RICOCHET_1
 
 /turf/closed/wall/stalker/Initialize()
 	..()
@@ -129,6 +146,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall1"
 	smooth = SMOOTH_FALSE
+	flags_1 = CHECK_RICOCHET_1
 
 /turf/closed/wall/stalker/ship
 	name = "hull"
@@ -137,10 +155,44 @@
 	icon_state = "hull"
 	canSmoothWith = list(/turf/closed/wall/stalker/ship)
 
+/turf/closed/wall/stalker/log
+	name = "log wall"
+	desc = "A log wall"
+	icon = 'icons/turf/walls/log.dmi'
+	icon_state = "log"
+	canSmoothWith = list(/turf/closed/wall/stalker/log)
+
+/turf/closed/wall/stalker/store
+	name = "concrete wall"
+	desc = "A concrete wall"
+	icon = 'icons/turf/walls/store.dmi'
+	icon_state = "store"
+	canSmoothWith = list(/turf/closed/wall/stalker/store)
+
+/turf/closed/wall/stalker/superstore
+	name = "concrete wall"
+	desc = "A concrete wall"
+	icon = 'icons/turf/walls/superstore.dmi'
+	icon_state = "supermart"
+	canSmoothWith = list(/turf/closed/wall/stalker/superstore)
+
+/turf/closed/wall/stalker/brickdark
+	name = "brick wall"
+	desc = "A dark brick wall"
+	icon = 'icons/turf/walls/brick_walldark.dmi'
+	icon_state = "brickwall"
+	canSmoothWith = list(/turf/closed/wall/stalker/brickdark)
+
+/turf/closed/wall/stalker/brick
+	name = "brick wall"
+	desc = "A brick wall"
+	icon = 'icons/turf/walls/brick_wall.dmi'
+	icon_state = "brickwall"
+	canSmoothWith = list(/turf/closed/wall/stalker/brick)
+
 /obj/structure/chair/brevno
 	name = "log"
 	desc = "A simple log."
-	eng_desc = "A simple log."
 	icon = 'stalker/icons/decor.dmi'
 	icon_state = "log1"
 
@@ -150,20 +202,20 @@
 /obj/effect/landmark/latejoin/bandit
 	name = "JoinLateBandit"
 
+/obj/effect/landmark/latejoin/banditboss
+	name = "JoinLateBandit Boss"
+
 /obj/effect/landmark/latejoin/bandit_barman
 	name = "JoinLateBandit Barman"
 
-/obj/effect/landmark/latejoin/bandit_pahan
-	name = "JoinLatePahan"
-
 /obj/effect/landmark/latejoin/army
-	name = "JoinLateArmy"
+	name = "JoinLateMilitary Soldier"
 
-/obj/effect/landmark/latejoin/army_eliteagro
-	name = "JoinLateEliteAgro"
+/obj/effect/landmark/latejoin/army_spetsnaz
+	name = "JoinLateMilitary Spetsnaz"
 
-/obj/effect/landmark/latejoin/petrovich
-	name = "JoinLatePetrovich"
+/obj/effect/landmark/latejoin/militarycommander
+	name = "JoinLateMilitary Commander"
 
 /obj/effect/landmark/latejoin/trader
 	name = "JoinLateTrader"
@@ -187,10 +239,10 @@
 	name = "JoinLateDuty Lieutenant"
 
 /obj/effect/landmark/latejoin/mercenary_sql
-	name = "JoinLateMercenary Sql"
+	name = "JoinLateMercenary Commander"
 
 /obj/effect/landmark/latejoin/freedom
-	name = "JoinLateFreedom"
+	name = "JoinLateFreedom Soldier"
 
 /obj/effect/landmark/latejoin/freedom_lieutenant
 	name = "JoinLateFreedom Lieutenant"
@@ -199,13 +251,25 @@
 	name = "JoinLateMonolith"
 
 /obj/effect/landmark/latejoin/monolith_hegumen
-	name = "JoinLateMonolith Hegumen"
+	name = "JoinLateMonolith Preacher"
 
 /obj/effect/landmark/latejoin/ecologist
 	name = "JoinLateEcologist"
 
+/obj/effect/landmark/latejoin/ecologistguard
+	name = "JoinLateEcologist Guard"
+
 /obj/effect/landmark/latejoin/chief_ecologist
 	name = "JoinLateChief Ecologist"
+
+/obj/effect/landmark/latejoin/clearsky
+	name = "JoinLateClear Sky Soldier"
+
+/obj/effect/landmark/latejoin/clearsky_leader
+	name = "JoinLateClear Sky Leader"
+
+/obj/effect/landmark/latejoin/renegade
+	name = "JoinLateRenegade"
 
 /turf/open/floor/plasteel/stairs/stalker
 	icon = 'stalker/icons/floor.dmi'
@@ -223,7 +287,7 @@
 	icon = 'stalker/icons/floor.dmi'
 	icon_state = "ladder_right"
 
-
+/*
 var/list/sidorRooms = list()
 
 /obj/sidor_enter
@@ -268,3 +332,4 @@ var/list/sidorRooms = list()
 	if(istype(A, /mob/living/carbon/human))
 		A.loc = A.previous_teleport_dest
 		occupant = null
+*/

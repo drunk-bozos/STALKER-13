@@ -182,7 +182,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	name = "mushroom stem"
 	desc = "A long mushroom stem. It's slightly glowing."
-	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
+	list_reagents = list("tinlux" = 2, "vitamin" = 1, "lsd" = 1)
 	icon_state = "mushroom_stem"
 	seed = /obj/item/seeds/lavaland/ember
 	wine_power = 60
@@ -226,7 +226,7 @@
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()
-
+/*
 //what you can craft with these things
 /datum/crafting_recipe/mushroom_bowl
 	name = "Mushroom Bowl"
@@ -234,7 +234,7 @@
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 5)
 	time = 30
 	category = CAT_PRIMAL
-
+*/
 /obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad
 	desc = "Very ashy."
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl

@@ -59,7 +59,7 @@
 		"diethylamine"
 	)
 	var/list/emagged_reagents = list(
-		"space_drugs",
+		"lsd",
 		"morphine",
 		"carpotoxin",
 		"mine_salve",
@@ -500,7 +500,6 @@
 		"kahlua",
 		"whiskey",
 		"wine",
-		"vodka",
 		"gin",
 		"rum",
 		"tequila",
@@ -567,7 +566,8 @@
 		"cryoxadone",
 		"ammonia",
 		"ash",
-		"diethylamine")
+		"diethylamine",
+		"compost")
 	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()

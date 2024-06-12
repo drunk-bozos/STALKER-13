@@ -1,3 +1,4 @@
+/*
 GLOBAL_LIST_EMPTY(mobspawner)
 GLOBAL_LIST_EMPTY(mobspawner_monolith)
 
@@ -46,15 +47,15 @@ SUBSYSTEM_DEF(zona)
 
 	switch(z_state)
 		if (L_RELAX)
-			cd = world.time + level_of_pain - 100
+			cd = world.time + level_of_pain - 1000
 		if (L_NORMAL)
-			cd = world.time + level_of_pain - 200
+			cd = world.time + level_of_pain - 2000
 		if (L_HARD)
-			cd = world.time + level_of_pain - 300
+			cd = world.time + level_of_pain - 3000
 		if (L_INSANE)
-			cd = world.time + level_of_pain - 400
+			cd = world.time + level_of_pain - 4000
 		if (L_EXTREME)
-			cd = world.time + level_of_pain - 500
+			cd = world.time + level_of_pain - 5000
 		else
 			cd = world.time + level_of_pain - 1000
 
@@ -65,20 +66,23 @@ SUBSYSTEM_DEF(zona)
 	return total_mobs
 
 /datum/controller/subsystem/zona/proc/SpawnMobs()
-	for (var/obj/effect/landmark/mobspawner/S in GLOB.mobspawner)
+	for (var/obj/structure/spawner/stalker in GLOB.mobspawner)
 		switch (S.name)
 			if ("flesh")
 				new /mob/living/simple_animal/hostile/mutant/flesh(S.loc)
 			if ("dog")
 				new /mob/living/simple_animal/hostile/mutant/dog(S.loc)
-			if ("kaban")
-				new /mob/living/simple_animal/hostile/mutant/kaban(S.loc)
+			if ("boar")
+				new /mob/living/simple_animal/hostile/mutant/boar(S.loc)
 			if ("snork")
 				new /mob/living/simple_animal/hostile/mutant/snork(S.loc)
 			if ("bloodsucker")
 				new /mob/living/simple_animal/hostile/mutant/bloodsucker(S.loc)
-			if ("controller")
-				new /mob/living/simple_animal/hostile/mutant/controller(S.loc)
+			if ("rat")
+				new /mob/living/simple_animal/hostile/mutant/rat(S.loc)
+			if ("zombiesimp")
+				new /mob/living/simple_animal/hostile/mutant/zombiesimp(S.loc)
+				new /mob/living/simple_animal/hostile/mutant/zombiesimp/ranged(S.loc)
 	for (var/obj/effect/landmark/mobspawner/monolith/S in GLOB.mobspawner_monolith)
 		switch (S.name)
 			if ("bloodsucker_m")
@@ -88,9 +92,11 @@ SUBSYSTEM_DEF(zona)
 				var/mob/M = new /mob/living/simple_animal/hostile/mutant/controller(S.loc)
 				M.faction = list("monolith_forces")
 
+
 #undef L_RELAX
 #undef L_NORMAL
 #undef L_HARD
 #undef L_INSANE
 #undef L_EXTREME
 #undef L_ABSURD
+*/

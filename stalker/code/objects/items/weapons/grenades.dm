@@ -1,7 +1,7 @@
 /obj/item/grenade/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/area/B = get_area(user.loc)
 	if(B.safezone)
-		to_chat(user, "<span class='warning'>You are trying to rip the pin off the grenade, but you stick your finger in the wrong place and rip your point off! </span> ")
+		to_chat(user, "<span class='warning'> I rethink my choices, its not wise to pull a grenade here. </span> ")
 		return 0
 	..()
 
@@ -18,6 +18,12 @@
 	qdel(src)
 
 /obj/item/grenade/syndieminibomb/concussion/stalker/frag
-	name = "frag grenade"
-	desc = "Fire in the hole."
-	icon_state = "frag"
+	name = "RGD-5 grenade"
+	desc = "An offensive hand grenade with a small radius of splinter damage. Unpin and throw quickly, has a fuse for couple of seconds."
+	icon_state = "rgd5grenade"
+
+//smoke
+/obj/item/grenade/smokebomb/rgd
+	name = "RGD-3"
+	desc = "A grenade designed to dump smoke into an area. Use with caution. Unpin and throw quickly, has a fuse for couple of seconds."
+	icon_state = "smoke"

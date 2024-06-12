@@ -2,8 +2,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/stack_objects.dmi'
-	amount = 6
-	max_amount = 6
+	amount = 8
+	max_amount = 8
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -14,18 +14,16 @@
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/stop_bleeding = 0
-	var/self_delay = 50
+	var/self_delay = 20
+	var/repeating = 0
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
+	. = ..()
+	try_heal(M,user)
 
-	if(M.stat == DEAD)
-		var/t_him = "it"
-		if(M.gender == MALE)
-			t_him = "him"
-		else if(M.gender == FEMALE)
-			t_him = "her"
-		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
-		return
+/obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user)
+
+	use(1)
 
 	if(!iscarbon(M) && !isanimal(M))
 		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
@@ -95,12 +93,10 @@
 				C.update_damage_overlays()
 		else
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+		if(repeating && amount > 0)
+			try_heal(M,user)
 	else
 		M.heal_bodypart_damage((src.heal_brute/2), (src.heal_burn/2))
-
-	use(1)
-
-
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -109,7 +105,7 @@
 	icon_state = "brutepack"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_brute = 40
+	heal_brute = 30
 	self_delay = 20
 	grind_results = list("styptic_powder" = 10)
 
@@ -164,10 +160,62 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	heal_burn = 40
+	heal_burn = 30
 	self_delay = 20
 	grind_results = list("silver_sulfadiazine" = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
 	return TOXLOSS
+
+/obj/item/stack/medical/suture
+	name = "suture pack"
+	singular_name = "suture"
+	desc = "A surgical needle with a length of a sterile thread designed to treat and stitch surface blunt-force trauma for further treatment."
+	icon_state = "suture"
+	amount = 14
+	max_amount = 14
+	repeating = 1
+	heal_brute = 10
+	self_delay = 10
+	grind_results = null
+
+/obj/item/stack/medical/mesh
+	name = "sterile mesh pack"
+	singular_name = "sterile mesh"
+	desc = "A bandage-like material meant to be wrapped around first-to-second degree burns for further treatment."
+	icon_state = "mesh"
+	lefthand_file = null
+	righthand_file = null
+	amount = 14
+	max_amount = 14
+	repeating = 1
+	heal_burn = 10
+	self_delay = 10
+	grind_results = null
+
+/obj/item/stack/medical/trauma_kit
+	name = "advanced trauma kit"
+	desc = "An assortment of various highly advanced styptic membranes meant to completely treat any sort of heavy wounds."
+	singular_name = "trauma kit"
+	icon_state = "traumakit"
+	lefthand_file = null
+	righthand_file = null
+	amount = 6
+	max_amount = 6
+	heal_brute = 45
+	self_delay = 35
+	grind_results = null
+
+/obj/item/stack/medical/burn_kit
+	name = "advanced burn kit"
+	desc = "An assortment of various highly advanced aseptic membranes meant to completely treat any sort of heavy burns."
+	singular_name = "burn kit"
+	icon_state = "burnkit"
+	lefthand_file = null
+	righthand_file = null
+	amount = 6
+	max_amount = 6
+	heal_burn = 45
+	self_delay = 35
+	grind_results = null

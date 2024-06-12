@@ -3,9 +3,11 @@
 	var/debriss_type
 	var/loot = list()
 	var/lootcount = 0
+	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
 
 /obj/structure/barricade/stalker/take_damage(damage, leave_debris=1, message)
 	obj_integrity -= damage
+	playsound(loc, pick(hit_sounds), 25, 1, -1)
 	if(obj_integrity > 0)
 		return
 
@@ -29,22 +31,28 @@
 /obj/structure/barricade/stalker/wood
 	name = "wooden barricade"
 	desc = "A barricaded passage."
-	eng_desc = "Planks."
 	icon_state = "zabitiy_proxod"
 	debriss_type = /obj/structure/stalker/doski
+
+/obj/structure/barricade/stalker/woodalt
+	name = "wooden barricade"
+	desc = "A barricaded passage."
+	icon_state = "zabitiy_proxod_alt"
+	debriss_type = /obj/structure/stalker/doski
+
 
 /obj/structure/barricade/stalker/box
 	name = "wooden box"
 	desc = "Boarded up wooden box. Who knows what might be inside."
 	icon = 'stalker/icons/decor.dmi'
-	icon_state = "yashik"
+	icon_state = "yashik_b"
 	debriss_type = /obj/structure/stalker/doski/doski2
 	anchored = 1
 	proj_pass_rate = 0
 	obj_integrity = 30
 	max_integrity = 30
 	lootcount = 2
-	loot = list(/obj/item/reagent_containers/pill/stalker/aptechka/civilian = 30,
+	loot = list(/obj/item/storage/firstaid/ai2 = 30,
 					/obj/item/artifact/meduza = 1,
 					/obj/item/reagent_containers/food/snacks/stalker/konserva = 55,
 					/obj/item/reagent_containers/food/snacks/stalker/konserva/shproti = 40,
@@ -52,7 +60,7 @@
 					/obj/item/reagent_containers/food/snacks/stalker/kolbasa = 60,
 					/obj/item/reagent_containers/food/snacks/stalker/baton = 75,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka/kazaki = 35,
-					/obj/item/reagent_containers/pill/stalker/aptechka/bint = 80,
+					/obj/item/stack/medical/gauze/bint = 80,
 					/obj/item/reagent_containers/hypospray/medipen/stalker/antirad = 10,
 					/obj/item/clothing/suit/hooded/kozhanka/banditka = 1,
 					/obj/item/ammo_box/stalker/b9x18 = 55,
@@ -67,8 +75,7 @@
 /obj/structure/stalker/blocks
 	name = "blocks"
 	icon = 'stalker/icons/decor2.dmi'
-	desc = "Ordinary concrete block."
-	eng_desc = "Blocks."
+	desc = "An ordinary concrete block."
 	density = 1
 	opacity = 1
 
@@ -152,10 +159,14 @@
 	else
 		return 0
 
+/obj/structure/stalker/blocks/vanish/wframe2nowalk
+	name =  "metal window frame"
+	icon = 'stalker/icons/wframe.dmi'
+	icon_state = "wframe"
+
 /obj/structure/stalker/blocks/vanish/pipe
 	name = "Pipe"
-	desc = "Big pipe."
-	eng_desc = "Big pipe."
+	desc = "A large pipe."
 	icon = 'stalker/icons/decor2.dmi'
 	icon_state = "truba1"
 
@@ -176,7 +187,6 @@
 
 /obj/structure/stalker/blocks/vanish/sandbags
 	name = "sandbags"
-	desc = "Sangbags."
-	eng_desc = "Sangbags."
+	desc = "A stack of sandbags."
 	icon = 'stalker/icons/structure/sandbags.dmi'
 	icon_state = "solo"

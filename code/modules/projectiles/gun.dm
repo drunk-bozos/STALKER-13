@@ -71,7 +71,7 @@
 
 	///////////////////////STALKER////////////////////////////////
 
-	var/can_scope = 0
+	var/can_scope = 0        //scopeable? (will still have to clarify which guns mod fit on in the scope's filepath)
 	var/draw_sound = 'stalker/sound/weapons/draw/ak74_draw.ogg'
 	var/damagelose = 0		 //1 урона за 1 тайл = 0.33 ед
 	var/distro = 0			 //gap between shotgun shot
@@ -133,7 +133,7 @@
 		pin = new pin(src)
 	if(gun_light)
 		alight = new(src)
-	build_zooming()
+//	build_zooming()
 
 /obj/item/gun/Destroy()
 	QDEL_NULL(pin)
@@ -190,9 +190,9 @@
 	if(durability)
 		percentage = (durability / (initial(durability)))*100
 		if(percentage >= 50)
-			to_chat(user, "<span class='notice'>Прочность: [percentage]%</span>")
+			to_chat(user, "<span class='notice'>Durability: [percentage]%</span>")
 		else
-			to_chat(user, "<span class='warning'>Прочность: [percentage]%</span>")
+			to_chat(user, "<span class='warning'>Durability: [percentage]%</span>")
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -300,7 +300,7 @@
 		if(user.client && (user.client.prefs.chat_toggles & CHAT_LANGUAGE))
 			to_chat(user, "<span class='warning'>You can't shoot in the safezone!</span>")
 		else
-			to_chat(user, "<span class='warning'>Вы не можете стрелять в этой зоне!</span>")
+			to_chat(user, "<span class='warning'>You can't shoot in the safezone!</span>")
 		return 0
 	if(!handle_pins(user))
 		return FALSE
@@ -657,6 +657,9 @@
 	gun.zoom(L, FALSE)
 	..()
 
+/obj/item/gun/shiftv(mob/user)
+	if(zoomable)
+		zoom(user)
 
 /obj/item/gun/proc/zoom(mob/living/user, forced_zoom)
 	if(!user || !user.client)

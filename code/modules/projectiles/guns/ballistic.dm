@@ -105,7 +105,7 @@
 		playsound (src.loc, 'stalker/sound/weapons/detach_addon.ogg', 50, 1, 0)
 		azoom.Remove(usr)
 		usr.put_in_hands(S)
-		zoomable = 0
+		zoomable = FALSE
 		addons.Remove(S)
 		build_zooming()
 		return
@@ -160,7 +160,7 @@
 			if (capacity_number)
 				add_overlay("[icon_state]_mag_[capacity_number]")*/
 
-var/global/list/obj/item/ammo_casing/ACs = list()
+GLOBAL_LIST_EMPTY(ammo_casings)
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -171,7 +171,7 @@ var/global/list/obj/item/ammo_casing/ACs = list()
 			AC.forceMove(drop_location()) //Eject casing onto ground.
 			AC.bounce_away(TRUE)
 			chambered = null
-			ACs += AC
+			GLOB.ammo_casings += AC
 		else if(empty_chamber)
 			chambered = null
 	if (chamber_next_round && (magazine.max_ammo > 1))
@@ -331,7 +331,7 @@ var/global/list/obj/item/ammo_casing/ACs = list()
 					return
 				to_chat(user, "<span class='notice'>You screwed [S] onto [src].</span>")
 				playsound (src.loc, 'stalker/sound/weapons/attach_addon.ogg', 50, 1, 0)
-				zoomable = 1
+				zoomable = TRUE
 				A.loc = src
 				update_icon()
 				addons += S

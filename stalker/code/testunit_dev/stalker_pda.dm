@@ -1,5 +1,5 @@
 GLOBAL_LIST_EMPTY(KPKs)
-var/global/global_lentahtml = ""
+GLOBAL_VAR_INIT(global_lentahtml, "")
 
 /obj/item/stalker_pda
 	name = "PDA"
@@ -92,12 +92,12 @@ var/global/global_lentahtml = ""
 		"cursor_busy.ani"		= 'stalker/html/cursors/busy.ani'
 	)
 
-/obj/item/stalker_pda/New()
-	..()
-	return
+/obj/item/stalker_pda/Initialize()
+	. = ..()
+	GLOB.KPKs += src
 
 /obj/item/stalker_pda/Destroy()
-	..()
+	. = ..()
 	if(src in GLOB.KPKs)
 		GLOB.KPKs -= src
 	return
@@ -602,7 +602,7 @@ var/global/global_lentahtml = ""
 				registered_name = H.real_name
 				owner = H
 				sid = H.sid
-				lentahtml = global_lentahtml
+				lentahtml = GLOB.global_lentahtml
 
 				//var/image = GLOB.data_core.fields["photo_front"]
 				//var/obj/item/photo/owner_photo_front = new()
@@ -617,12 +617,12 @@ var/global/global_lentahtml = ""
 				profile = find_record("sid", H.sid, GLOB.data_core.stalkers)
 
 				profile.fields["pass"] = pass
-
+/*
 				if(H.job == "Old Stalker" || H.job == "Duty Soldier" || H.job == "Monolith Soldier" || H.job == "Freedom Soldier")
 					profile.fields["rating"] = 3000
 				else if(H.job == "Duty Lieutenant" || H.job == "Monolith Hegumen" || H.job == "Freedom Lieutenant")
 					profile.fields["rating"] = 5000
-
+*/
 				set_owner_info(profile)
 			else //Если человек зарегистрирован в сети сталкеров
 				if(sk && sk.fields["pass"] != t)
@@ -639,7 +639,7 @@ var/global/global_lentahtml = ""
 				owner = H
 				sid = H.sid
 				if(!lentahtml)
-					lentahtml = global_lentahtml
+					lentahtml = GLOB.global_lentahtml
 
 				//var/image = GLOB.data_core.get_id_photo(H)
 
@@ -967,11 +967,6 @@ var/global/global_lentahtml = ""
 		if(last_invite + LEADER_INVITE_COOLDOWN > world.time)
 			return
 
-		var/datum/data/record/sk_invited = find_record("sid", sid_, GLOB.data_core.stalkers)
-
-		if(!sk_invited)
-			return
-
 		last_invite = world.time
 		for(var/obj/item/stalker_pda/KPK_invited in GLOB.KPKs)
 			if(KPK_invited.sid == sid_)
@@ -984,7 +979,6 @@ var/global/global_lentahtml = ""
 		var/datum/job/J = SSjob.GetJob(get_job_title(eng_faction_s))
 
 		var/datum/data/record/sk_removed = find_record("sid", sid_, GLOB.data_core.stalkers)
-
 		if(!sk_removed)
 			return
 
@@ -1052,7 +1046,7 @@ var/global/global_lentahtml = ""
 		</tr>\
 		</table>"
 
-	global_lentahtml = t + global_lentahtml
+	GLOB.global_lentahtml = t + GLOB.global_lentahtml
 	for(var/obj/item/stalker_pda/KPK in GLOB.KPKs)
 		KPK.lentahtml = t + KPK.lentahtml
 		show_lenta_message(KPK_owner, KPK, sid_owner, name_owner, faction_owner, msg)
@@ -1335,6 +1329,14 @@ var/global/global_lentahtml = ""
 			faction_s = "Freedom"
 		if("Monolith")
 			faction_s = "Monolith"
+		if("State Security Service")
+			faction_s = "State Security Service"
+		if("Clear Sky")
+			faction_s = "Clear Sky"
+		if("Renegades")
+			faction_s = "Renegades"
+		if("Ecologists")
+			faction_s = "Ecologists"
 	return faction_s
 
 /proc/get_faction_color(var/eng_faction_s)
@@ -1352,6 +1354,14 @@ var/global/global_lentahtml = ""
 			factioncolor = "#6cba3f"
 		if("Monolith")
 			factioncolor = "#7c26d3"
+		if("Renegades")
+			factioncolor = "#bbae6a"
+		if("Clear Sky")
+			factioncolor = "#64B2F7"
+		if("Ecologists")
+			factioncolor = "#601919"
+		if("State Security Service")
+			factioncolor = "#2E8B57"
 	return factioncolor
 
 /proc/get_rep_name(var/rep)
@@ -1429,7 +1439,13 @@ var/global/global_lentahtml = ""
 			return "Freedom"
 		if("Monolith")
 			return "Monolith"
-		if("Army")
-			return "Army"
+		if("State Security Service")
+			return "Military"
+		if("Clear Sky")
+			return "Clear Sky"
+		if("Renegades")
+			return "Renegade"
+		if("Ecologists")
+			return "Ecologist"
 		else
 			return "Loner"

@@ -283,32 +283,54 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	switch(name)
 		if ("JoinLateBandit")
 			SSjob.latejoin_bandit += loc
+		if ("JoinLateBandit Boss")
+			SSjob.latejoin_banditboss += loc
 		if ("JoinLateBandit Barman")
 			SSjob.latejoin_bandit_barman += loc
-		if ("JoinLatePahan")
-			SSjob.latejoin_bandit_pahan += loc
-		if ("JoinLateArmy" || "JoinLateEliteAgro" || "JoinLatePetrovich")
+		if ("JoinLateMilitary Soldier")
 			SSjob.latejoin_army += loc
+		if ("JoinLateMilitary Spetsnaz")
+			SSjob.latejoin_army_spetsnaz+= loc
+		if ("JoinLateMilitary Commander")
+			SSjob.latejoin_militarycommander+= loc
 		if ("JoinLateBarman")
 			SSjob.latejoin_barman += loc
 		if ("JoinLateBarman2")
 			SSjob.latejoin_barman2 += loc
+		if ("JoinLateTrader")
+			SSjob.latejoin_trader += loc
 		if ("JoinLateDuty")
 			SSjob.latejoin_duty += loc
 		if ("JoinLateDuty Lieutenant")
-			SSjob.latejoin_duty_lt += loc
-		if ("JoinLateFreedom" || "JoinLateFreedom Lieutenant")
+			SSjob.latejoin_duty_lieutenant += loc
+		if ("JoinLateFreedom Soldier")
 			SSjob.latejoin_freedom += loc
+		if ("JoinLateFreedom Lieutenant")
+			SSjob.latejoin_freedom_lieutenant += loc
 		if ("JoinLateMercenary")
 			SSjob.latejoin_mercenary += loc
-		if ("JoinLateMercenary Sql")
-			SSjob.latejoin_mercenary_sql += loc
+		if ("JoinLateMercenary Commander")
+			SSjob.latejoin_mercenarycommander += loc
 		if ("JoinLateTrader")
 			SSjob.latejoin_trader += loc
 		if ("JoinLateOld Stalker")
 			SSjob.latejoin_stalker += loc
-		if ("JoinLateMonolith" || "JoinLateMonolith Hegumen")
+		if ("JoinLateMonolith")
 			SSjob.latejoin_monolith += loc
+		if ("JoinLateMonolith Preacher")
+			SSjob.latejoin_monolith_hegumen += loc
+		if ("JoinLateEcologist")
+			SSjob.latejoin_ecologist += loc
+		if ("JoinLateEcologist Guard")
+			SSjob.latejoin_ecologistguard += loc
+		if ("JoinLateChief Ecologist")
+			SSjob.latejoin_chief_ecologist += loc
+		if ("JoinLateClear Sky Soldier")
+			SSjob.latejoin_clearsky += loc
+		if ("JoinLateClear Sky Leader")
+			SSjob.latejoin_clearsky_leader += loc
+		if ("JoinLateRenegade")
+			SSjob.latejoin_renegade += loc
 		else
 			SSjob.latejoin_trackers += loc
 	return INITIALIZE_HINT_QDEL
@@ -468,3 +490,92 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+GLOBAL_LIST_EMPTY(blowout_spawners)
+
+/obj/effect/landmark/blowout_spawner
+	name = "blowout spawner"
+	var/spawn_range = 3
+	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
+	var/max_mobs = 5
+	var/list/faction = list("mining")
+	var/list/spawned_mobs = list()
+
+/obj/effect/landmark/blowout_spawner/Initialize()
+	. = ..()
+	GLOB.blowout_spawners += src
+	spawn_mobs()
+
+/obj/effect/landmark/blowout_spawner/Destroy()
+	. = ..()
+	GLOB.blowout_spawners -= src
+
+/obj/effect/landmark/blowout_spawner/proc/heal_mobs()
+	for(var/mob/living/our_mob as anything in spawned_mobs)
+		our_mob.revive(TRUE)
+
+/obj/effect/landmark/blowout_spawner/proc/spawn_mobs()
+	var/list/possible_tiles = view(spawn_range, src)
+	for(var/turf/closed/closed_turf as anything in possible_tiles)
+		possible_tiles -= closed_turf
+	if(!length(possible_tiles))
+		possible_tiles |= get_turf(src)
+	var/current_mob_amount = length(spawned_mobs)
+	var/picked_tile
+	var/mob_type
+	var/mob/living/spawned_mob
+	for(var/i in 1 to (max_mobs - current_mob_amount))
+		picked_tile = pick(possible_tiles)
+		mob_type = pick(mob_types)
+		spawned_mob = new mob_type(picked_tile)
+		spawned_mob.faction = faction.Copy()
+		spawned_mobs += spawned_mob
+		RegisterSignal(spawned_mob, COMSIG_PARENT_QDELETED, .proc/remove_mob_from_list)
+
+/obj/effect/landmark/blowout_spawner/proc/remove_mob_from_list(mob/source)
+	spawned_mobs -= source
+
+/obj/effect/landmark/blowout_spawner/flesh
+	max_mobs = 4
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/flesh)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/boar
+	max_mobs = 3
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/boar)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/snork
+	max_mobs = 3
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/snork)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/dog
+	max_mobs = 4
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/dog)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/pseudo
+	max_mobs = 2
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/pseudog)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/bloodsucker
+	max_mobs = 2
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/bloodsucker)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/controller
+	max_mobs = 1
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/controller)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/zombiesimp
+	max_mobs = 5
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/zombiesimp,/mob/living/simple_animal/hostile/mutant/zombiesimp/ranged)
+	faction = list("stalker_mutants1", "monolith_forces")
+
+/obj/effect/landmark/blowout_spawner/allmutants
+	max_mobs = 4
+	mob_types = list(/mob/living/simple_animal/hostile/mutant/zombiesimp,/mob/living/simple_animal/hostile/mutant/zombiesimp/ranged,/mob/living/simple_animal/hostile/mutant/rat,/mob/living/simple_animal/hostile/mutant/flesh,/mob/living/simple_animal/hostile/mutant/boar,/mob/living/simple_animal/hostile/mutant/snork,/mob/living/simple_animal/hostile/mutant/bloodsucker)
+	faction = list("stalker_mutants1", "monolith_forces")

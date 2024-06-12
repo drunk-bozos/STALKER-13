@@ -60,11 +60,11 @@
 /datum/bounty/item/botany/cannabis
 	name = "Cannabis Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis)
-	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white, /obj/item/reagent_containers/food/snacks/grown/cannabis/death, /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate)
+	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white, /obj/item/reagent_containers/food/snacks/grown/cannabis/death, /obj/item/reagent_containers/food/snacks/grown/cannabis/neonpeon)
 	multiplier = 4 //hush money
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "batch of \"muffins\""
-	
+
 /datum/bounty/item/botany/cannabis_white
 	name = "Lifeweed Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white)
@@ -79,9 +79,9 @@
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "\"meal\""
 
-/datum/bounty/item/botany/cannabis_ultimate
-	name = "Omega Weed Leaves"
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate)
+/datum/bounty/item/botany/cannabis_neonpeon
+	name = "Neon Peon Weed Leaves"
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/neonpeon)
 	multiplier = 6
 	bonus_desc = "Under no circumstances mention this shipment to security."
 	foodtype = "batch of \"brownies\""
@@ -182,7 +182,7 @@
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/pineapple)
 	bonus_desc = "Not for human consumption."
 	foodtype = "ashtray"
-
+/*
 /datum/bounty/item/botany/tomato
 	name = "Tomatoes"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/tomato)
@@ -192,7 +192,7 @@
 	name = "Bluespace Tomatoes"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/tomato/blue/bluespace)
 	multiplier = 4
-
+*/
 /datum/bounty/item/botany/oatz
 	name = "Oats"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/oat)

@@ -25,14 +25,14 @@
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
 	reqs = list(/datum/reagent/fuel = 50,
-				/obj/item/stack/cable_coil = 1,
-				/obj/item/assembly/igniter = 1,
+				/obj/item/trash/binding_material = 1,
+				/obj/item/trash/igniter = 1,
 				/obj/item/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/reagent_containers/food/drinks/soda_cans = 1)
 	time = 15
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
+/*
 /datum/crafting_recipe/lance
 	name = "Explosive Lance (Grenade)"
 	result = /obj/item/twohanded/spear
@@ -54,6 +54,7 @@
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+*/
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"
@@ -65,6 +66,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/*
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
 	result = /obj/item/melee/baton/cattleprod
@@ -86,6 +88,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+*/
 /datum/crafting_recipe/bola
 	name = "Bola"
 	result = /obj/item/restraints/legcuffs/bola
@@ -95,6 +98,7 @@
 	category= CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/*
 /datum/crafting_recipe/gonbola
 	name = "Gonbola"
 	result = /obj/item/restraints/legcuffs/bola/gonbola
@@ -681,3 +685,4 @@
 	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+*/

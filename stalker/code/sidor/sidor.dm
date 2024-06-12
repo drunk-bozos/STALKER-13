@@ -1,6 +1,6 @@
 /obj/sidor
 	name = "Sidor"
-	icon = 'icons/stalker/sidorovich.dmi'
+	icon = 'stalker/icons/sidorovich.dmi'
 	icon_state = "sidor"
 
 	var/successText = list("Not bad! Good product!",
@@ -214,13 +214,13 @@
 			return I.cost
 	return 0
 
-var/list/sidorRooms = list()
+/*var/list/sidorRooms = list()
 //var/obj/sidor_enter/sidorEnter = null
 
 /obj/sidor_enter
 	var/roomtype = "sidor"
 	invisibility = INVISIBILITY_LIGHTING
-	icon = 'icons/stalker/areas.dmi'
+	icon = 'stalker/icons/areas.dmi'
 	icon_state = "transfer_zone"
 
 /obj/sidor_enter/Crossed(atom/movable/A)
@@ -247,7 +247,7 @@ var/list/sidorRooms = list()
 	var/roomtype = "sidor"
 	var/mob/living/occupant = null
 	invisibility = INVISIBILITY_LIGHTING
-	icon = 'icons/stalker/areas.dmi'
+	icon = 'stalker/icons/areas.dmi'
 	icon_state = "transfer_zone"
 
 /obj/sidor_exit/New()
@@ -257,7 +257,7 @@ var/list/sidorRooms = list()
 	if(istype(A, /mob/living/carbon/human))
 		A.loc = A.previous_teleport_dest
 		occupant = null
-
+*/
 var/global/sidoritems = list(
 		new /sidoritem/ak74,
         new /sidoritem/aksu74,

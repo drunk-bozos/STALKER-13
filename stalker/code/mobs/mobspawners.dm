@@ -1,3 +1,4 @@
+/*
 /obj/effect/landmark/mobspawner
 	name = "mob spawner"
 	icon_state = "xeno_spawn"
@@ -22,7 +23,7 @@
 /obj/effect/landmark/mobspawner/dog_spawner
 	name = "dog"
 
-/obj/effect/landmark/mobspawner/kaban_spawner
+/obj/effect/landmark/mobspawner/boar_spawner
 	name = "boar"
 
 /obj/effect/landmark/mobspawner/snork_spawner
@@ -39,3 +40,10 @@
 
 /obj/effect/landmark/mobspawner/monolith/controller_spawner
 	name = "controller_m"
+
+/obj/effect/landmark/mobspawner/rat_spawner
+	name = "rat"
+
+/obj/effect/landmark/mobspawner/zombiesimp_spawner
+	name = "zombiesimp"
+*/

@@ -225,7 +225,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M)
-	M.radiation = max(M.radiation-2,0)
+	M.radiation = max(M.radiation-4,0)
+	return ..()
+
+/datum/reagent/consumable/ethanol/stalkervodka
+	name = "Vodka"
+	id = "stalkervodka"
+	description = "Number one drink AND fueling choice for Russians worldwide. This one smells off..."
+	color = "#0064C8" // rgb: 0, 100, 200
+	boozepwr = 75
+	taste_description = "putrid grain alcohol"
+	glass_icon_state = "ginvodkaglass"
+	glass_name = "glass of dirty vodka"
+	glass_desc = "The glass contain wodka. Xynta."
+	shot_glass_icon_state = "shotglassclear"
+
+/datum/reagent/consumable/ethanol/stalkervodka/on_mob_life(mob/living/carbon/M)
+	M.radiation = max(M.radiation-6,0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bilk
@@ -506,6 +522,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Vodka martini"
 	glass_desc ="A bastardisation of the classic martini. Still great."
 
+/datum/reagent/consumable/ethanol/vodkamartini/on_mob_life(mob/living/carbon/M)
+	M.radiation = max(M.radiation-24,0)
+	return ..()
+
 /datum/reagent/consumable/ethanol/white_russian
 	name = "White Russian"
 	id = "whiterussian"
@@ -517,6 +537,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiterussianglass"
 	glass_name = "White Russian"
 	glass_desc = "A very nice looking drink. But that's just, like, your opinion, man."
+
+/datum/reagent/consumable/ethanol/white_russian/on_mob_life(mob/living/carbon/M)
+	M.radiation = max(M.radiation-24,0)
+	return ..()
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail
 	name = "Screwdriver"
@@ -531,8 +555,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Station Engineer", "Atmospheric Technician", "Chief Engineer")) //Engineers lose radiation poisoning at a massive rate.
-		M.radiation = max(M.radiation - 25, 0)
+	M.radiation = max(M.radiation-24,0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/booger
@@ -557,6 +580,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "bloodymaryglass"
 	glass_name = "Bloody Mary"
 	glass_desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
+
+/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/M)
+		M.radiation = max(M.radiation - 25, 0)
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)

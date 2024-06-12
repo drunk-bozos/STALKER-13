@@ -138,32 +138,71 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 200, 55)
 
+// SPIRITS
+
+/obj/item/reagent_containers/food/drinks/bottle/vodka
+	name = "tunguska triple distilled"
+	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "vodkabottle"
+	list_reagents = list("vodka" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/vodka/stalkervodka
+	name = "Zone-Produced vodka"
+	desc = "Vodka produced by the desperation of some 'ingenious' stalkers using local mushrooms and wild-grasses. It tastes and smells like filthy piss, but it'll do the job cheap!"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "stalker_vodka"
+	list_reagents = list("stalkervodka" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/vodka/kazaki
+	name = "Cossacks vodka"
+	desc = "Vodka by ukrainian company GSC. Easy to drink. Can reduce radiation from human's body."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "gsc_vodka"
+	list_reagents = list("vodka" = 90, "potass_iodide" = 10)
+
+/obj/item/reagent_containers/food/drinks/bottle/vodka/stolichnaya
+	name = "Stolichnaya vodka"
+	desc = "Vodka which comes from some of Russia's oldest distilleries. Smooth in both flavour and burn. Some Stalkers swear by it's ability to cure radiation poisoning!"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "stolichnaya"
+	list_reagents = list("vodka" = 80, "potass_iodide" = 20)
+	w_class = 2
+
+/obj/item/reagent_containers/food/drinks/bottle/vodka/blacklabelvodka
+	name = "Black-Label vodka"
+	desc = "Produced in the European Union. This grain-alcohol is proof that even in The Zone? Luxury can be found! A potent and energetic drink!"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "blacklabel_vodka"
+	list_reagents = list("vodka" = 70, "potass_iodide" = 20, "energetic" = 10)
+	w_class = 2
+
 /obj/item/reagent_containers/food/drinks/bottle/gin
-	name = "Griffeater gin"
+	name = "griffeater gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
 	list_reagents = list("gin" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/whiskey
-	name = "Uncle Git's special reserve"
+	name = "uncle Git's special reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list("whiskey" = 100)
 
-/obj/item/reagent_containers/food/drinks/bottle/vodka
-	name = "Tunguska triple distilled"
-	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
-	icon_state = "vodkabottle"
+/obj/item/reagent_containers/food/drinks/bottle/vodka/bluegoose
+	name = "blue goose vodka"
+	desc = "A expensive vodka which is only for flexing."
+	icon_state = "bluegoose"
 	list_reagents = list("vodka" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka
-	name = "Badminka vodka"
+	name = "badminka vodka"
 	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
 	icon_state = "badminka"
 	list_reagents = list("vodka" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/tequila
-	name = "Caccavo guaranteed quality tequila"
+	name = "caccavo guaranteed quality tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequilabottle"
 	list_reagents = list("tequila" = 100)
@@ -401,7 +440,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
-	icon_state = "vodkabottle"
+	icon_state = "molotovbottle"
 	list_reagents = list()
 	var/list/accelerants = list(	/datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
@@ -425,10 +464,17 @@
 			if(istype(R,A))
 				firestarter = 1
 				break
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/M = hit_atom
+		M.adjust_fire_stacks(6)
+		M.IgniteMob()
+		damtype = BURN
+		throwforce = pick(30,40,50)
 	if(firestarter && active)
 		hit_atom.fire_act()
 		new /obj/effect/hotspot(get_turf(hit_atom))
 	..()
+
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot() && !active)
